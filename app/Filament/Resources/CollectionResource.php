@@ -21,6 +21,7 @@ use Filament\Forms\Set;
 
 class CollectionResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Product Management';
     protected static ?string $model = Collection::class;
     protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
     public static function form(Form $form): Form

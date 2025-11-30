@@ -22,15 +22,14 @@ use Filament\Forms\Set;
 
 class CategoryResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Product Management';
     protected static ?string $model = Category::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -53,6 +52,9 @@ class CategoryResource extends Resource
 
                 Forms\Components\FileUpload::make('image')
                     ->image()
+                    ->visibility('public')
+                    ->disk('public')
+                    ->imageEditor()
                     ->directory('categories'),
 
                 Forms\Components\Toggle::make('is_active')
@@ -65,7 +67,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->disk('public'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')

@@ -1,8 +1,9 @@
 <div>
     <!-- Hero Section -->
     <section class="hero-video hero hero-image">
-        <video class="video-slide" src="{{ asset('videos/hero_vid.mp4') }}" autoplay muted loop></video>
-    </section>
+        {{-- <video class="video-slide" src="{{ asset('videos/hero_vid.mp4') }}" autoplay muted loop></video> --}}
+        <x-hero/>
+    </section>    
 
     {{-- <!-- Shop Section -->
     <section class="shop my-5">
@@ -51,7 +52,7 @@
     </section> --}}
 
     @livewire('partials.shop')
-
+    
     <!-- Trending [Horizontal Cards] Swiper Slide Show -->
     <section class="horizontal-cards my-5">
         <div class="container">

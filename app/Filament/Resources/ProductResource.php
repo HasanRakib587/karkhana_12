@@ -35,6 +35,7 @@ use Filament\Tables\Filters\SelectFilter;
 
 class ProductResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Product Management';
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
