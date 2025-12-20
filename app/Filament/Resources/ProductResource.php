@@ -70,6 +70,7 @@ class ProductResource extends Resource
                         FileUpload::make('images')
                         ->multiple()
                         ->directory('products')
+                        ->preserveFilenames()
                         ->maxFiles(5)
                         ->reorderable()
                         ->panelLayout('grid')                        

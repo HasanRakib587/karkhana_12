@@ -51,11 +51,12 @@ class CategoryResource extends Resource
                     ->maxLength(255),
 
                 Forms\Components\FileUpload::make('image')
-                    ->image()
+                    ->image()                    
                     ->visibility('public')
                     ->disk('public')
                     ->imageEditor()
-                    ->directory('categories'),
+                    ->directory('categories')
+                    ->preserveFilenames(),
 
                 Forms\Components\Toggle::make('is_active')
                     ->required()
