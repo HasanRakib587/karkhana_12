@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('x9bq77s-panel')
             ->routes(function () {
                     Route::get('/orders/{record}/print', [InvoicePrintController::class, 'print'])
                         ->name('filament.admin.orders.print');
