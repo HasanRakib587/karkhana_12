@@ -45,7 +45,7 @@
                 @foreach ($products as $product)
                     <div class="col-lg-4" wire:key="{{ $product->id }}">
                         <div class="card-product card bg-dark text-white my-3">
-                            <img src="{{ Storage::url($product->images[0]) }}" class="card-img" alt="{{ $product->name }}">
+                            <img src="{{ asset('uploads/' . $product->images[0]) }}" class="card-img" alt="{{ $product->name }}">
                             <div
                                 class="card-img-overlay d-flex flex-column justify-content-end text-center bg-dark bg-opacity-50 p-3">
                                 <a href="{{ route('product.detail', $product->slug) }}" wire:navigate>

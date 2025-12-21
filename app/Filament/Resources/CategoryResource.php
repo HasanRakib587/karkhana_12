@@ -53,7 +53,7 @@ class CategoryResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()                    
                     ->visibility('public')
-                    ->disk('public')
+                    ->disk('public_uploads')
                     ->imageEditor()
                     ->directory('categories')
                     ->preserveFilenames(),

@@ -42,6 +42,7 @@ class CollectionResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
                     ->image()
+                    ->disk('public_uploads')
                     ->directory('collection')
                     ->preserveFilenames(),
                 Forms\Components\Toggle::make('is_active')

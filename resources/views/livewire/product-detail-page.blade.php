@@ -13,7 +13,7 @@
                                 <div x-data="{ scale: 1, originX: '50%', originY: '50%' }"
                                     @mousemove="scale = 2.5; originX = ($event.offsetX / $event.target.clientWidth) * 100 + '%'; originY = ($event.offsetY / $event.target.clientHeight) * 100 + '%'"
                                     @mouseleave="scale = 1" class="zoom-container">
-                                    <img src="{{ url('storage', $img) }}" class="d-block w-100"
+                                    <img src="{{ asset('uploads/' . $img) }}" class="d-block w-100"
                                         :style="`transform: scale(${scale}); transform-origin: ${originX} ${originY}; transition: transform 0.4s ease;`"
                                         alt="{{ $product->name }}" />
                                 </div>
@@ -39,7 +39,7 @@
                                 <li class="px-2" wire:key="thumb-{{ $product->id }}">
                                     <a href="" data-bs-target="#carouselExampleSlidesOnly"
                                         data-bs-slide-to="{{ $index }}"><img class="img-fluid"
-                                            src="{{ url('storage', $img) }}" alt="" width="64px" height="64px" />
+                                            src="{{ asset('uploads/' . $img) }}" alt="" width="64px" height="64px" />
                                     </a>
                                 </li>
                             @endforeach
@@ -88,13 +88,13 @@
                 <h3>Quantity</h3>
                 <div class="d-flex align-items-center mt-4" style="max-width: 150px;"
                     wire:key="qty-controls-{{ $product->id }}">
-                    <button wire:click="decreaseQty" type="button" class="btn btn-outline-primary rounded-start w-25">
+                    <button wire:click="decreaseQty" type="button" class="btn btn-outline-primary rounded-start">
                         <span class="fs-4 fw-light">−</span>
                     </button>
                     <input type="text" wire:model.live="quantity"
                         class="form-control text-center fw-semibold border-none rounded-0 bg-secondary text-dark"
                         readonly>
-                    <button wire:click="increaseQty" type="button" class="btn btn-outline-primary rounded-end w-25">
+                    <button wire:click="increaseQty" type="button" class="btn btn-outline-primary rounded-end ">
                         <span class="fs-4 fw-light">+</span>
                     </button>
                 </div>
@@ -132,7 +132,7 @@
                 @foreach ($relatedProducts as $products)
                     <div class="col-md-3">
                         <div class="card-product card bg-primary text-light my-3">
-                            <img src="{{ url('storage', $products->images[0]) }}" class="card-img"
+                            <img src="{{ asset('uploads/' . $products->images[0]) }}" class="card-img"
                                 alt="{{ $products->name }}" />
                             <div
                                 class="card-img-overlay d-flex flex-column justify-content-end text-center bg-dark bg-opacity-50 p-3">
@@ -172,8 +172,8 @@
                         <div class="card flex-column flex-lg-row align-items-center bg-secondary border-0">
                             <div class="col-lg-6 {{ $isEven ? 'order-lg-2' : 'order-lg-1' }}">
                                 <a wire:navigate href="/products?selected_categories[0]={{ $category->id }}">
-                                    <img src="{{ Storage::url($category->image) }}" class="img-fluid w-100 card-cat-image"
-                                        alt="{{ $category->name }}" />
+                                    <img src="{{ asset('uploads/' . $category->image) }}"
+                                        class="img-fluid w-100 card-cat-image" alt="{{ $category->name }}" />
                                 </a>
                             </div>
                             <div class="card-body col-lg-6 order-lg-1">

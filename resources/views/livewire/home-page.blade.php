@@ -2,8 +2,8 @@
     <!-- Hero Section -->
     <section class="hero-video hero hero-image">
         {{-- <video class="video-slide" src="{{ asset('videos/hero_vid.mp4') }}" autoplay muted loop></video> --}}
-        <x-hero/>
-    </section>    
+        <x-hero />
+    </section>
 
     {{-- <!-- Shop Section -->
     <section class="shop my-5">
@@ -52,7 +52,7 @@
     </section> --}}
 
     @livewire('partials.shop')
-    
+
     <!-- Trending [Horizontal Cards] Swiper Slide Show -->
     <section class="horizontal-cards my-5">
         <div class="container">
@@ -71,7 +71,7 @@
                             <div class="card trending-card bg-primary text-light border-primary">
                                 <div class="row g-0">
                                     <div class="col-6 col-md-5 order-1">
-                                        <img src="{{ Storage::url($featuredProduct->images[0]) }}"
+                                        <img src="{{ asset('uploads/' . $featuredProduct->images[1]) }}"
                                             class="card-img img-fluid rounded-start" alt="Pendant" />
                                     </div>
                                     <div class="col-6 col-md-7">
@@ -159,7 +159,7 @@
 
                     @foreach ($categories as $category)
                         <div class="carousel-item active" wire:key="{{ $category->id }}">
-                            <img src="{{ Storage::url($category->image) }}" class="img-fluid w-100" alt="...">
+                            <img src="{{ asset('uploads/' . $category->image) }}" class="img-fluid w-100" alt="...">
                             <div
                                 class="d-none d-md-block carousel-caption d-flex flex-column align-items-center justify-content-center bg-primary bg-opacity-50 text-light mb-5 rounded-3">
                                 <h2 class="font-primary fw-bold d-none d-md-block">{{ $category->name }}</h2>

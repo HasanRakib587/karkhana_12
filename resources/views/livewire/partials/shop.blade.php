@@ -16,7 +16,7 @@
                     <div class="card flex-column flex-lg-row align-items-center bg-secondary border-0">
                         <div class="col-lg-6 {{ $isEven ? 'order-lg-2' : 'order-lg-1' }}">
                             <a wire:navigate href="/products?selected_categories[0]={{ $category->id }}">
-                                <img src="{{ Storage::url($category->image) }}" class="img-fluid w-100 card-cat-image"
+                                <img src="{{ asset('uploads/' . $category->image) }}" class="img-fluid w-100 card-cat-image"
                                     alt="{{ $category->name }}" />
                             </a>
                         </div>
