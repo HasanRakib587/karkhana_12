@@ -2,27 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
-use App\Models\Customer;
 use Dom\Text;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Customer;
+use Filament\Forms\Form;
+use Filament\Pages\Page;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-use Filament\Forms;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Pages\Page;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\CreateRecord;
+use Filament\Forms\Components\DateTimePicker;
+use App\Filament\Resources\CustomerResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
 
 class CustomerResource extends Resource
 {
@@ -74,12 +75,20 @@ class CustomerResource extends Resource
                 TextColumn::make('phone')                
                 ->sortable()
                 ->searchable(),
-
-                TextColumn::make('email_verified_at')
-                ->dateTime()
-                ->sortable(),
+                
+                IconColumn::make('email_verified_at')
+                    ->label('Email Verified')
+                    ->state(fn ($record) => ! is_null($record->email_verified_at))
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->sortable(),
 
                 TextColumn::make('created_at')
+                ->label('Joined')
+                ->dateTime('jS F Y')
                 ->sortable(),
             ])
             ->filters([
