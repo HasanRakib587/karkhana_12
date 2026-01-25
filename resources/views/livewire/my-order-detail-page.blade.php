@@ -121,7 +121,7 @@
                                     <tr wire:key="{{ $item->id }}">
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ Storage::url($item->product->images[0]) }}"
+                                                <img src="{{ asset('uploads/' . $item->product->images[0]) }}"
                                                     alt="{{ $item->product->name }}" class="me-3 rounded"
                                                     style="width:64px; height:64px;">
                                                 <span class="fw-semibold">{{ $item->product->name }}</span>

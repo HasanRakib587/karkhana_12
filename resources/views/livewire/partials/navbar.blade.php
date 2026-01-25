@@ -14,9 +14,9 @@
 
             @if ($isHome)
                 <div class="logo d-flex justify-content-center align-items-center">
-                    <div class="navbar-brand">
-                        <img class="img-fluid" src="{{ asset('images/logo.svg') }}" alt="" />
-                    </div>
+                    <img class="img-fluid" src="{{ asset('images/logo.svg') }}" alt="" />
+                    {{-- <div class="navbar-brand">
+                    </div> --}}
                 </div>
             @else
                 <div class="navbar-brand logo">
@@ -47,7 +47,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.logout') }}">Logout</a></li>
                             </ul>
                         </li>
                     @endauth

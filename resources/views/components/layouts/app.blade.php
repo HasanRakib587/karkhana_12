@@ -14,7 +14,13 @@
 <body class="d-flex flex-column min-vh-100">
     @livewire('partials.navbar')
     <main class="flex-fill">
-        {{ $slot }}
+
+        {{-- Blade pages --}}
+        @yield('content')
+
+        {{-- Livewire pages --}}
+        {{ $slot ?? '' }}
+        
     </main>
     @livewire('partials.footer')
     @stack('scripts')

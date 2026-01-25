@@ -2,43 +2,46 @@
 
 namespace App\Filament\Resources;
 
+use Dom\Text;
+use BcMath\Number;
 use Filament\Forms;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Textarea;
 use Filament\Tables;
 use App\Models\Order;
+use App\Models\Product;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Filament\Resources;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Group;
+use Illuminate\Support\Facades\Mail;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\CustomerResource;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\SelectColumn;
 
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
+use App\Filament\Resources\CustomerResource;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\OrderResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
-use App\Models\Product;
-use BcMath\Number;
-use Dom\Text;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\ToggleButtons;
-
-use Illuminate\Support\Str;
-use Filament\Forms\Set;
-use Filament\Forms\Get;
-use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Columns\TextColumn;
 
 class OrderResource extends Resource
 {
@@ -62,7 +65,7 @@ class OrderResource extends Resource
 
                         Select::make('payment_method')
                         ->options([
-                            'sslCommerz' => 'Debit/Credit Card',
+                            // 'sslCommerz' => 'Debit/Credit Card',
                             'MFS'=> 'bkash',
                             'cod'=> 'COD (Cash on Delivery)',
                         ])
@@ -111,11 +114,13 @@ class OrderResource extends Resource
                             'cad' => 'CAD'
                         ])->default('BDT')->disabled()->dehydrated(),
 
-                        Select::make('shipping_method')
-                        ->options([
-                            'home'=> 'Home Delivery',
-                            'pickup'=> 'Pickup',                            
-                        ]),
+                        // Select::make('shipping_method')
+                        // ->options([
+                        //     'home'=> 'Home Delivery',
+                        //     'pickup'=> 'Pickup',                            
+                        // ]),
+                        TextInput::make('bkash_last_digits')->disabled()->dehydrated(),
+                        TextInput::make('bkash_trx_id')->disabled()->dehydrated(),
 
                         Textarea::make('notes')->columnSpanFull(),
                     ])->columns(2),
@@ -190,7 +195,6 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-
                 TextColumn::make('id')
                         ->label('# Order')
                         ->sortable()
@@ -206,15 +210,15 @@ class OrderResource extends Resource
                 ->sortable()
                 ->money('BDT'),
 
-                TextColumn::make('payment_method')
-                    ->formatStateUsing(fn ($state) => match ($state) {
-                        'stripe' => 'Debit/Credit Card',
-                        'MFS'    => 'bkash',
-                        'Due'    => 'COD (Cash on Delivery)',
-                        default  => $state,
-                    })
-                    ->searchable()
-                    ->sortable(),
+                // TextColumn::make('payment_method')
+                //     ->formatStateUsing(fn ($state) => match ($state) {
+                //         'stripe' => 'Debit/Credit Card',
+                //         'MFS'    => 'bkash',
+                //         'Due'    => 'COD (Cash on Delivery)',
+                //         default  => $state,
+                //     })
+                //     ->searchable()
+                //     ->sortable(),
 
                 TextColumn::make('payment_status')
                 ->formatStateUsing(fn ($state) => match ($state) {
@@ -225,8 +229,30 @@ class OrderResource extends Resource
                     })
                     ->searchable()
                     ->sortable(),
+                
+                TextColumn::make('bkash_last_digits')
+                    ->label('bKash digit')
+                    ->searchable()
+                    ->sortable(),
+                
+                // TextColumn::make('bkash_trx_id')
+                //     ->label('TRX ID')
+                //     ->searchable()
+                //     ->sortable(),
+                
+                // ViewColumn::make('bkash_trx_id')
+                //     ->label('TRX ID')
+                //     ->view('filament.tables.columns.trx-verify'),
+                IconColumn::make('confirmation_email_sent')
+                    ->label('Email Sent')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray'),
 
                 SelectColumn::make('status')
+                ->label('Order Status')
                 ->options([
                     'new'=> 'New',
                     'processing' => 'Processing',
@@ -256,17 +282,56 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('view_invoice')
-                        ->label('Invoice')
-                        ->icon('heroicon-o-document')
-                        ->url(fn($record) => self::getUrl('invoice', ['record' => $record->id])),
+                // Tables\Actions\Action::make('view_invoice')
+                //         ->label('Invoice')
+                //         ->icon('heroicon-o-document')
+                //         ->url(fn($record) => self::getUrl('invoice', ['record' => $record->id])),
+
+                Tables\Actions\Action::make('sendConfirmation')
+                        ->label('Send Email')
+                        ->icon('heroicon-o-paper-airplane')
+                        ->color('primary')
+                        ->requiresConfirmation()
+                        ->modalHeading('Send payment confirmation email?')
+                        ->visible(fn ($record) =>
+                            filled($record->bkash_last_digits)
+                            && ! $record->confirmation_email_sent
+                        )
+                        ->disabled(fn ($record) => $record->confirmation_email_sent)
+                        
+                        ->action(function ($record) {
+                            Mail::to($record->customer->email)
+                                ->send(new \App\Mail\PaymentConfirmedMail($record));
+                            
+                            $record->update([
+                                'confirmation_email_sent' => true,
+                                'confirmation_email_sent_at' => now(),
+                                'payment_status' => 'paid',
+                            ]);
+                            
+                            Notification::make()
+                                ->title('Confirmation email sent')
+                                ->success()
+                                ->send();        
+                        }),                        
+
                 ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),                    
+                    Tables\Actions\DeleteAction::make(),    
+                    Tables\Actions\Action::make('view_invoice')
+                        ->label('Invoice')
+                        ->icon('heroicon-o-document')
+                        ->url(fn($record) => self::getUrl('invoice', ['record' => $record->id])),                                    
                 ]),                
 
             ])
+            ->recordClasses(fn ($record) =>
+                ! $record->confirmation_email_sent
+                    ? 'border-l-4 border-yellow-500'
+                    : null
+            )
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -285,6 +350,12 @@ class OrderResource extends Resource
     {
         return static::getModel()::query()->where('status', 'new')->count();        
     }
+
+    // public function verify($id)
+    // {
+    //     $record = Order::findOrFail($id);
+    //     $record->update(['is_verified' => true]);
+    // }
 
     public static function getPages(): array
     {

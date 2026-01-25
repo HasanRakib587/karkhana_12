@@ -12,6 +12,7 @@ class CartPage extends Component
 {
     public $cart_items = [];
     public $grand_total;
+    public $discount = 0;
 
     public function mount(){
         $this->cart_items = CartManagement::getCartItemsFromCookie();
@@ -19,12 +20,12 @@ class CartPage extends Component
     }
 
     public function increaseQty($product_id){
-        $this->cart_items = CartManagement::incrementQuantityToCartItem($product_id);
+        $this->cart_items = CartManagement::incrementQuantity($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
     }
 
     public function decreaseQty($product_id){
-        $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
+        $this->cart_items = CartManagement::decrementQuantity($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
     }
 
@@ -36,6 +37,7 @@ class CartPage extends Component
 
     public function render()
     {
-        return view('livewire.cart-page');
+        $this->discount = ($this->grand_total >= 7000) ? $this->grand_total * .07 : 0;
+        return view('livewire.cart-page', ['discount' => $this->discount]);
     }
 }

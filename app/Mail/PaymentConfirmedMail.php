@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CashOnDeliveryConfirmationMail extends Mailable
+class PaymentConfirmedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,8 @@ class CashOnDeliveryConfirmationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            // subject: 'Order Placed - Karkhana',
-            subject: 'Order Confirmation - #' . $this->order->id . ' | Karkhana',
+            // subject: 'Payment Confirmed Mail',
+            subject: 'bKash Payment Received - #' . $this->order->bkash_last_digits . ' | Karkhana',
         );
     }
 
@@ -40,11 +40,10 @@ class CashOnDeliveryConfirmationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.orders.order-placed',
+            view: 'mail.orders.payment-received',
             with: [
-                // 'url' => route('order.details', $this->order),
                 'order' => $this->order,
-            ]
+            ],
         );
     }
 

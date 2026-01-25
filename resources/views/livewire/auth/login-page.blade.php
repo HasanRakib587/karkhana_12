@@ -5,13 +5,13 @@
                 <div class="card-body p-4 p-sm-5">
                     <div class="text-center mb-4">
                         <h1 class="font-primary h3 fw-bold text-dark mb-2">Sign in</h1>
-                        <p class="font-secondary text-muted small">
+                        {{-- <p class="font-secondary text-muted small">
                             Don't have an account yet?
                             <a wire:navigate href="{{ route('user.register') }}"
                                 class="text-primary font-primary fw-semibold text-decoration-underline">
                                 Sign up here
                             </a>
-                        </p>
+                        </p> --}}
                     </div>
 
                     <hr class="my-4">
@@ -25,7 +25,7 @@
                             </div>
                         @endif
 
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="email" class="font-secondary form-label small fw-semibold">Email address</label>
                             <input type="email" id="email" wire:model="email" class="form-control form-control-lg"
                                 aria-describedby="email-error">
@@ -58,7 +58,7 @@
                         </button>
                         <p class="divider-text">
                             <span class="bg-light">OR</span>
-                        </p>
+                        </p> --}}
                         <div class="d-grid gap-2 mb-3">
                             <a href="{{ route('auth.redirection', 'google') }}" class="btn btn-social btn-google">
                                 <i class="bi bi-google me-2"></i> Sign in with Google

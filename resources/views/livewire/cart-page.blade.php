@@ -25,7 +25,7 @@
                                 <tr wire:key="{{ $item['product_id'] }}">
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ Storage::url($item['image']) }}" alt="{{ $item['name'] }}"
+                                            <img src="{{ asset('uploads/'.$item["image"]) }}" alt="{{ $item['name'] }}"
                                                 class="me-3 rounded" style="width: 70px; height: 70px; object-fit: cover;">
                                             <span class="fw-semibold">{{ $item['name'] }}</span>
                                         </div>
@@ -73,18 +73,25 @@
                     <span>{{ Number::currency($grand_total, 'BDT') }}</span>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
-                    <span>Tax and VAT(15%)</span>
-                    <span>{{ Number::currency($grand_total * .15, 'BDT') }}</span>
+                    {{-- <span>Tax and VAT(15%)</span> --}}
+                    {{-- <span>{{ Number::currency($grand_total * .15, 'BDT') }}</span> --}}
+                    @if($discount > 0)                        
+                        <span>Discount( 7% )</span>
+                        <span>{{ Number::currency($grand_total * .07, 'BDT') }}</span>   
+                    @else
+                        <span>Discount(0%)</span>
+                        <span>{{ Number::currency($grand_total * 0, 'BDT') }}</span>
+                    @endif
                 </div>
-                <div class="d-flex justify-content-between mb-2">
+                {{-- <div class="d-flex justify-content-between mb-2">
                     <span>Delivery Charge</span>
                     <span>{{ Number::currency(60, 'BDT') }}</span>
-                </div>
+                </div> --}}
                 <hr class="my-3">
                 <div class="d-flex justify-content-between mb-3">
                     <span class="fw-semibold">Total</span>
                     <span
-                        class="fw-semibold">{{ Number::currency($grand_total + $grand_total * .15 + 60, 'BDT') }}</span>
+                        class="fw-semibold">{{ Number::currency($grand_total - $discount, 'BDT') }}</span>
                 </div>
                 @if ($cart_items)
                     <a wire:navigate href="{{ route('checkout') }}" class="btn btn-primary w-100 text-light">Checkout</a>

@@ -20,15 +20,14 @@ class SocialiteController extends Controller
     }
 
     public function socialAuthentication(){
-        $googleUser = Socialite::driver('google')->user();
-        
+
+        $googleUser = Socialite::driver('google')->user();        
         $customer = Customer::where('google_id', $googleUser->id)->first();
 
         try{
-
             if($customer){
             Auth::guard('customer')->login($customer);
-            return redirect()->route('home');
+            return redirect()->intended(route('home'));
         }else{
             $customerData = Customer::create([
                 'name' => $googleUser->name,
@@ -39,7 +38,7 @@ class SocialiteController extends Controller
 
             if($customerData){
                 Auth::guard('customer')->login($customerData);
-                return redirect()->route('home');
+                return redirect()->intended(route('home'));
             }
         }
 

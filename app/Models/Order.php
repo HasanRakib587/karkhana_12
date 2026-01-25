@@ -17,6 +17,10 @@ class Order extends Model
         'currency',
         'shipping_cost',
         'shipping_method',
+        'bkash_last_digits',
+        'bkash_trx_id',
+        'confirmation_email_sent',
+        'confirmation_email_sent_at',
         'notes'
     ];
 
