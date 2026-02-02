@@ -219,16 +219,17 @@
             <div class="row gx-5 justify-content-center">
                 <div class="col-xxl-8">
                     <div class="text-center my-5">
-                        <h2 class="font-primary fw-bolder display-6 text-light">About Me</h2>
+                        <h2 class="font-primary fw-bolder display-6 text-light">About Karkhana</h2>
                         <p class="font-secondary fw-light lead fw-light mb-4">
-                            My name is Hasan Rakib and I help brands grow.
+                            Karkhana is an unique collection of handmade jewellery made eltirely with indigenous
+                            materials.
                         </p>
-                        <p class="font-seondary text-light">
+                        {{-- <p class="font-seondary text-light">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit
                             dolorum itaque qui unde quisquam consequatur autem. Eveniet
                             quasi nobis aliquid cumque officiis sed rem iure ipsa!
                             Praesentium ratione atque dolorem?
-                        </p>
+                        </p> --}}
                         <div class="d-flex justify-content-center fs-2 gap-4">
                             <a class="text-gradient" href="#!"><i class="bi bi-twitter"></i></a>
                             <a class="text-gradient" href="#!"><i class="bi bi-linkedin"></i></a>
