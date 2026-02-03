@@ -7,6 +7,7 @@
         <h1>Contact Us</h1>
         <!-- Bootstrap 5 starter form -->
         <form id="contactForm" method="POST" action="{{ route('contact.submit') }}">
+            @csrf
             <div class="row">
                 <div class="col-md-6">
                     <!-- Name input -->
