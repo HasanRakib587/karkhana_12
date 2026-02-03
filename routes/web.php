@@ -63,6 +63,9 @@ Route::middleware('auth:customer')->group(function(){
     Route::get('/cancelled', CancelPage::class)->name('cancelled');       
 });
 
+
+Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+
 // Route::prefix('sslcommerz')->group(function (){
 //     Route::get('/init/{order}', [SslCommerzController::class, 'init'])
 //             ->name('sslcommerz.init');

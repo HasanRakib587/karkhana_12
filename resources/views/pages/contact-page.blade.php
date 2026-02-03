@@ -6,35 +6,36 @@
     <div class="container my-5 pt-5">
         <h1>Contact Us</h1>
         <!-- Bootstrap 5 starter form -->
-        <form id="contactForm">
+        <form id="contactForm" method="POST" action="{{ route('contact.submit') }}">
             <div class="row">
                 <div class="col-md-6">
                     <!-- Name input -->
                     <div class="mb-3">
                         <label class="form-label" for="name">Name</label>
-                        <input class="form-control" id="name" type="text" placeholder="Name" />
+                        <input class="form-control" name="name" id="name" type="text" placeholder="Name" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <!-- Email address input -->
                     <div class="mb-3">
                         <label class="form-label" for="emailAddress">Email Address</label>
-                        <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" />
+                        <input class="form-control" name="email" id="emailAddress" type="email"
+                            placeholder="Email Address" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <!-- Subject input -->
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label" for="name">Name</label>
                         <input class="form-control" id="name" type="text" placeholder="Subject" />
-                    </div>
+                    </div> --}}
                     <!-- Message input -->
                     <div class="mb-3">
                         <label class="form-label" for="message">Message</label>
-                        <textarea class="form-control" id="message" type="text" placeholder="Message"
-                            style="height: 10rem;"></textarea>
+                        <textarea class="form-control" name="message" rows="5" required id="message" type="text"
+                            placeholder="Message" style="height: 10rem;"></textarea>
                     </div>
                 </div>
             </div>
