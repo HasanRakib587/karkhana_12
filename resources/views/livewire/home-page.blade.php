@@ -159,7 +159,8 @@
 
                     @foreach ($categories as $category)
                         <div class="carousel-item active" wire:key="{{ $category->id }}">
-                            <img src="{{ asset('uploads/' . $category->image) }}" class="img-fluid w-100" alt="...">
+                            <img src="{{ asset('uploads/' . $category->image) }}" class="img-fluid w-100"
+                                alt="{{ $category->name }}">
                             <div
                                 class="d-none d-md-block carousel-caption d-flex flex-column align-items-center justify-content-center bg-primary bg-opacity-50 text-light mb-5 rounded-3">
                                 <h2 class="font-primary fw-bold d-none d-md-block">{{ $category->name }}</h2>

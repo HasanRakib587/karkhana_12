@@ -13,7 +13,7 @@
                                 <div x-data="{ scale: 1, originX: '50%', originY: '50%' }"
                                     @mousemove="scale = 2.5; originX = ($event.offsetX / $event.target.clientWidth) * 100 + '%'; originY = ($event.offsetY / $event.target.clientHeight) * 100 + '%'"
                                     @mouseleave="scale = 1" class="zoom-container">
-                                    <img src="{{ asset('uploads/' . $img) }}" class="d-block w-100"
+                                    <img src="{{ asset('uploads/' . $img) }}" class="d-block img-fluid"
                                         :style="`transform: scale(${scale}); transform-origin: ${originX} ${originY}; transition: transform 0.4s ease;`"
                                         alt="{{ $product->name }}" />
                                 </div>
@@ -56,7 +56,7 @@
                         </a>
                     </div>
 
-                    <div class="d-flex mt-3">
+                    {{-- <div class="d-flex mt-3">
                         <h5 class="font-secondary fw-light px-2 text-center">
                             Free Shipping on order $75+
                         </h5>
@@ -68,7 +68,7 @@
                         <h5 class="font-secondary fw-light px-2 text-center">
                             Ship to Home, Delivered in 2-4 business days
                         </h5>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -76,32 +76,32 @@
                 <h1 class="font-primary text-dark">
                     {{ $product->name }}
                 </h1>
-                <h5 class="font-primary py-5 text-dark fw-bold">
+                <h5 class="font-primary text-dark fw-bold">
                     {{ Number::currency($product->price, 'BDT') }}
                 </h5>
-                <p class="font-secondary lead text-dark py-1 display-6">
+                <p class="font-secondary lead text-dark">
                     {{ $product->description }}
                 </p>
 
 
                 <hr>
-                <h3>Quantity</h3>
+                <h4>Quantity</h4>
                 <div class="d-flex align-items-center mt-4" style="max-width: 150px;"
                     wire:key="qty-controls-{{ $product->id }}">
                     <button wire:click="decreaseQty" type="button" class="btn btn-outline-primary rounded-start">
-                        <span class="fs-4 fw-light">−</span>
+                        <span class="fs-6 fw-light">−</span>
                     </button>
                     <input type="text" wire:model.live="quantity"
                         class="form-control text-center fw-semibold border-none rounded-0 bg-secondary text-dark"
                         readonly>
                     <button wire:click="increaseQty" type="button" class="btn btn-outline-primary rounded-end ">
-                        <span class="fs-4 fw-light">+</span>
+                        <span class="fs-6 fw-light">+</span>
                     </button>
                 </div>
 
                 <div class="button-container d-grid mt-1">
                     <button wire:click="addToCart({{ $product->id }})" type="button"
-                        class="my-5 font-primary fw-bold btn btn-lg btn-primary text-light rounded-0 p-4">
+                        class="my-5 font-primary fw-bold btn btn-lg btn-primary text-light rounded-0 p-2">
                         <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to Bag</span>
                         <span wire:loading wire:target="addToCart({{ $product->id }})">Adding..</span>
                     </button>
