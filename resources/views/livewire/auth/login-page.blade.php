@@ -30,9 +30,9 @@
                             <input type="email" id="email" wire:model="email" class="form-control form-control-lg"
                                 aria-describedby="email-error">
                             @error('email')
-                                <div id="email-error" class="text-danger">
-                                    {{ $message }}
-                                </div>
+                            <div id="email-error" class="text-danger">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
 
@@ -47,9 +47,9 @@
                             <input type="password" id="password" wire:model="password"
                                 class="form-control form-control-lg" aria-describedby="password-error">
                             @error('password')
-                                <div id="password-error" class="text-danger">
-                                    {{ $message }}
-                                </div>
+                            <div id="password-error" class="text-danger">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </div>
 
@@ -63,7 +63,8 @@
                             <a href="{{ route('auth.redirection', 'google') }}" class="btn btn-social btn-google">
                                 <i class="bi bi-google me-2"></i> Sign in with Google
                             </a>
-                            <a href="{{ route('auth.redirection', 'facebook') }}" class="btn btn-social btn-facebook">
+                            <a href="{{ route('auth.redirection', 'facebook') }}"
+                                class="btn btn-social btn-facebook disabled ">
                                 <i class="bi bi-facebook me-2"></i> Sign in with Facebook
                             </a>
                         </div>
